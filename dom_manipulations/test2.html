@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+  <body>
+    <div>Change text</div>
+    <div>Make background black and text white</div>
+    <div>Rotate me 90 degrees</div>
+    <div>Switch a and z</div>
+    <div>z</div>
+    <div>Remove all vowels</div>
+    <div>a</div>
+    <div>insert anchor tag and add 'www.google.com' to href</div>
+    <div>remove the 4th div tag</div>
+    <div>Create timer and after 3 seconds, insert your name</div>
+    
+    
+
+    <script>
+      var divArray = $('div');
+      var vowels = ['a', 'e', 'i', 'o', 'u'];
+      divArray[0].innerText = 'i have been changed'; 
+      $(divArray[1]).css( {backgroundColor: 'black', color: 'white'});
+      $(divArray[2]).css( {transform: 'rotate(90deg)', display: 'inline-block', position: 'relative', left: '300px'});
+      removeVowels(divArray[5].innerHTML);
+      $(divArray[4]).insertAfter('div:nth-of-type(6)');
+      $(divArray[6]).insertAfter('div:nth-of-type(4)'); 
+      $(divArray[7]).wrap('<a href="http://www.google.com" />');
+      $(divArray[8]).css('display', 'none');
+      
+
+      setTimeout(function() {
+        divArray[9].innerHTML = "allen";
+      }, 3000)
+      
+
+      function removeVowels( text, index, newStr) { 
+        var textSplit = text.split(''); // we have to split the string into an array
+        var newStr = newStr ? newStr : ""; // newStr is an optional parameter, if it exist then we use it, if not, we set it to an empty string.
+        var index = index ? index : 0; // index is an optional parameter, if it's exist then we use it, if not then set it to 0
+        if (index >= textSplit.length) { // since this is a recursive funtion, we must find a way to break out of it or else INFINITE LOOOOOOPPPP
+          divArray[5].innerHTML = newStr; // change our text to a new text
+          return;
+        }
+
+        for (var i = 0; i < vowels.length; i+=1) { // for loop over our vowels
+          if ( vowels[ i ] === textSplit[ index ] ) { // if the index of our string equals a vowel
+            index++;                                   // we want to go to the next index.
+          }
+          if (textSplit[ index ] !== vowels[ i ] && i + 1 === vowels.length) {  // we have to ensure that our current index is not a vowel and that we've checked all vowels
+            newStr += textSplit[ index ];  // adds to our new strng
+            index++; // we need to move on to the next index
+            removeVowels(text, index, newStr); // it's recursive, we must add all of our parameters for it to work, the text we want to change, current index, and current string
+          }
+
+        }
+
+      }
+    </script>
+  </body>
+
+</html>
